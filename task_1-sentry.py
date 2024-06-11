@@ -1,5 +1,5 @@
 import sentry_sdk
-from flask import Flask
+from flask import Flask, request
 sentry_sdk.init(
     dsn="https://e9318f5b96e488a94524397dd5f3d69d@o4507406755102720.ingest.de.sentry.io/4507406758051922",
     # Set traces_sample_rate to 1.0 to capture 100%
@@ -15,7 +15,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    1/0 # raises an error
+    if request.args.get("error"):
+        1/0 # raises an error
     return "<p>Hello, World!</p>"
 
 
